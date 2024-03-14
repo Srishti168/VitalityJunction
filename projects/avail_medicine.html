@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Available Medicine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function()
+      {
+        // alert(); 
+        $("#btn-med").click(function()
+        {
+          // $("#meds").empty();
+          var m_email=$("#medEmail").val();
+          var m_name=$("#medName").val();
+          var m_date=$("#medDate").val();
+          var m_pack=$("#medPack").val();
+        
+          var m_quant=$("#medQuan").val();
+          // alert(m_pack);
+
+          var obj={
+            type:"get",
+            url:"/chk-med",
+            data:{
+              email:m_email,
+              name:m_name,
+              date:m_date,
+              pack:m_pack,
+              quant:m_quant
+            }
+          }
+          $.ajax(obj).done(function(res)
+          {
+            // alert(JSON.stringify(res));
+            $("#meds").html(res).css("color","grey");
+          }).fail(function(err)
+          {
+             alert(err);
+          })
+        }) 
+        
+        
+        function avMed()
+        {
+          var a=localStorage.getItem("active");
+          $("#medEmail").val(a).prop("readonly",true);
+        }
+        avMed();
+      })
+    </script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+      <div class="container-fluid" style="background-color:lightseagreen;">
+        <a class="navbar-brand"  style="font-family:Georgia, 'Times New Roman', Times, serif; font-size:30px;">Vitality Junction</a>
+        
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+           
+      </div>
+  </nav>
+    
+  <div class="container">
+    <div class="row mb-4">
+  
+  <form class="row g-3 " method="post" action="/avail-med" enctype="multipart/form-data">
+    
+    <div class="container" >
+        <div class="row  " >
+    <div class="col-md-8 mb-3 offset-md-2 ">
+      <label for="inputEmail4" class="form-label">Email</label>
+      <input type="email" class="form-control"id="medEmail" name="medEmail" >
+    </div>
+   
+    <div class="col-md-4 mb-3 offset-md-2 ">
+        <label  class="form-label">Medicine Name</label>
+        <input type="text" class="form-control" id="medName" name="medName" >
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="inputEmail4" class="form-label">Expiry Date</label>
+        <input type="date" class="form-control"  name="medDate" id="medDate" >
+      </div>
+    
+    
+    <div class="col-md-5 mb-3 offset-md-2">
+      <label class="form-label">Packing</label>
+      <select class="form-select" name="medPack" id="medPack">
+          
+           <option selected>Choose...</option>
+          <option value="Ampoules">Ampoules</option>
+          <option value="Blister Packs">Blister Packs</option>
+          <option value="Bottles">Bottles</option>
+          <option value="Vials">Vials</option>
+       
+        </select>
+    </div>
+    <div class="col-md-3 mb-3">
+      
+      
+      <label for="" class="form-label" >Quantity</label>
+      <input type="Number" class="form-control" name="medQuan" id="medQuan">
+  
+    </div>
+  
+    
+      
+      
+    
+    <div class="col-4  mt-2 offset-md-2">
+      <div class="d-grid gap-2 d-md-block">
+        <input type="button" value="Avail Medicine" id="btn-med" class="btn btn-primary">
+        <!-- <button class="btn btn-primary" type="button">Update</button> -->
+        <div class="col-md-10 mt-4">
+          <div id="meds"></div>
+        </div> 
+      </div>
+    </div>
+  </div>
+  </div>
+  </form>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

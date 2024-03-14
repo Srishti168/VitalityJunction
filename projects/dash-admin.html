@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin DashBoard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <script>
+          function admin()
+          {
+            // alert("hi");
+            var a=localStorage.getItem("active");
+             document.getElementById("adm").innerHTML=a;
+            //  alert(a);
+
+          }
+        </script>
+  </head>
+  <body onload="admin()">
+     
+    <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+      <div class="container-fluid fixed"  style="background-color:lightseagreen; ">
+        <a class="navbar-brand"  style="font-family:Georgia, 'Times New Roman', Times, serif; font-size:30px;">Vitality Junction</a>
+         
+          <div id="adm" style="font-size: 20px;">*</div>
+           
+      </div>
+  </nav>
+  <div class="container mt-3">
+    <div class="row ">
+      <div class="col-md-4 ">
+        <div class="card" align="center" >
+          <div class="text-center mt-5">
+          <img src="pics/people.png" style="height: 200px;width: 200px;" class="card-img-top" alt="...">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title mt-3">Details</h5>
+            <a href="panel_user.html" class="btn btn-primary mt-5">Details</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card"  align="center">
+          <div class="text-center mt-5">
+          <img src="pics/donor.png" style="height: 200px;width: 200px;" class="card-img-top" alt="...">
+          </div>
+          
+          <div class="card-body">
+            <h5 class="card-title mt-3">Donors</h5>
+             <a href="panel_donor.html" class="btn btn-primary mt-5">Donors</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card" align="center">
+          <div class="text-center mt-5">
+          <img src="pics/needy.jpeg" style="height: 200px;width: 200px;" class="card-img-top" alt="...">
+          </div>
+          <!-- <center>
+            <div class="mt-4">
+              <i class="fas fa-user-md fa-10x"></i>
+            </div>
+          </center> -->
+          <div class="card-body">
+            <h5 class="card-title mt-3">Needy
+            </h5>
+           <a href="panel_needy.html" class="btn btn-primary mt-5">Needy</a>
+          </div>
+        </div>
+      </div>
+      <d
+    </div>
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

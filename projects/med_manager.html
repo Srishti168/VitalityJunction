@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Medicine Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <script src="script/angular.min.js"></script>
+    <script>
+        //   var module=angular.module("myModule",[]);
+    // module.controller("myController",function($scope,$http);
+        var module=angular.module("myModule",[]);
+        module.controller("myController",function($scope,$http)
+        {
+        //    $scope.jsonArray;
+        $scope.jsonArray;
+           $scope.fn="";
+        
+           $scope.fetch_donor=function()
+           {
+            //  alert(fn);
+            //  alert("hiiii")
+            // alert($scope.fn);
+            // alert($scope.fn)
+            var url="/fetch-donor?kemail="+$scope.fn;
+            $http.get(url).then(done,fail);
+            function done(respo)
+            {
+              // alert(JSON.stringify(respo.data));
+             $scope.jsonArray=respo.data;
+            //  alert($scope.datam);
+             $scope.datam="Data"+" Received";
+            //  alert($scope.datas);
+            }
+            function fail(err)
+            {
+              alert(err);   
+            }
+           }
+           $scope.del=function(sno)
+           {
+                // alert(sno);
+            var url="/unavailable?sno="+sno;
+            $http.get(url).then(done,fail);
+            function done(respo)
+            {
+                // alert("hi");
+                $scope.fetch_donor();
+            //   alert(JSON.stringify(respo.data));
+            
+            }
+            function fail(err)
+            {
+              alert(err);   
+            }
+           }
+
+           $scope.doMed=function()
+        {
+          // alert();
+           
+          $scope.fn=localStorage.getItem("active");
+          $scope.truefalse=true;
+          
+        }
+
+          
+        
+        })
+       
+       
+       
+    </script>
+  </head>
+  <body ng-app="myModule" ng-controller="myController" ng-init="doMed();" >
+    
+    <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+      <div class="container-fluid" style="background-color:lightseagreen;">
+        <a class="navbar-brand"  style="font-family:Georgia, 'Times New Roman', Times, serif; font-size:30px;">Vitality Junction</a>
+        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+             
+        </div>
+    </nav>
+    <!-- <input type="text" id="mail"> -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 offset-md-2 mt-3" >
+                <div class="row mb-3">
+                    <label for="colFormLabel" class="col-sm-1 col-form-label" >Email</label>
+                    <div class="col-sm-7">
+                      <input type="text"  class="form-control" ng-model="fn" ng-readonly="truefalse" >
+                    </div>
+                    <div class="col-md-3">
+                        <input type="button"  value="Get Records" ng-click="fetch_donor();" class="btn btn-outline-info ">
+                    </div>
+                    
+                  </div>
+            </div>
+            <div class="col-md-4 offset-md-5 mb-3">
+              <span style="color: grey;"  >
+                {{datam}}
+             </span>
+            </div>
+            <div class="col-md-8 offset-md-2">
+                <table class="table table-dark table-hover">
+                    <tr>
+                        <th>Sr.No</th>
+                        <th>Medicine Name</th>
+                        <th>Expiry Date</th>
+                        <th>Quantity</th>
+                        <th>Operations</th>
+                        <tr ng-repeat="obj in jsonArray">
+                              <td>{{$index+1}}</td>
+                              <td>{{obj.m_name}}</td>
+                              <td>{{obj.date}}</td>
+                              <td>{{obj.quant}}</td>
+                              <td>
+                                <input type="button" value="Unavailable" class="btn btn-outline-danger" ng-click="del(obj.sno);">
+                              </td>
+                        </tr>
+                    </tr>
+                  </table>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

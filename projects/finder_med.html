@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Finding Medicine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="script/angular.min.js"></script>
+    <script>
+      var module=angular.module("myModule",[]);
+      module.controller("myController",function($scope,$http)
+      {
+          $scope.jsonCity;
+          $scope.city;
+          $scope.doCity=function()
+          {
+            var url="/find_city";
+            $http.get(url).then(done,fail);
+            function done(res){
+                // alert(JSON.stringify(res.data));
+                $scope.jsonCity=res.data;
+                // alert($scope.city);
+            }
+            function fail(err){
+                alert(err);
+            }
+          }
+
+           $scope.jsonMed;
+          $scope.doMed=function()
+          {
+            // alert("");
+            var url="/find_med";
+            $http.get(url).then(done,fail);
+            function done(res){
+                // alert(JSON.stringify(res.data));
+                $scope.jsonMed=res.data;
+                // alert($scope.city);
+            }
+            function fail(err){
+                alert(err);
+            }
+          }
+
+          $scope.dofind_donor=function()
+          {
+            // alert("hello");
+            // alert($scope.city.city);
+            // alert($scope.med.m_name);
+            var url="/dofind_1donor?kuchcity="+$scope.city.city+"&kuchmed="+$scope.med.m_name;
+            // alert(url);
+            $http.get(url).then(done,fail);
+            function done(res){
+                // alert("minee");
+              //  alert(JSON.stringify(res.data));
+               $scope.find_donor=res.data;
+            }
+            function fail(err){
+                alert(err);
+            }
+          }
+          $scope.selectedObj;
+          $scope.doShow=function(index)
+          {
+             $scope.selectedObj=$scope.find_donor[index];
+          }
+
+      })
+
+
+
+    </script> 
+</head>
+<body ng-app="myModule" ng-controller="myController" ng-init="doCity();doMed();">
+    
+    <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+      <div class="container-fluid" style="background-color:lightseagreen;">
+        <a class="navbar-brand"  style="font-family:Georgia, 'Times New Roman', Times, serif; font-size:30px;">Vitality Junction</a>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+             
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 offset-md-2 mt-4">
+                <label for="inputEmail4" class="form-label">City</label>
+                <!-- <select class="form-select" aria-label="Default select example" ng-options="obj.city for obj in jsonCity" ng-model="city"> -->
+                  <select class="form-select" aria-label="Default select example" ng-options="obj.city for obj in jsonCity" ng-model="city">
+                  <option selected value="">Open this select menu</option>
+                  </select>
+            </div>
+            <div class="col-md-4  mt-4">
+                <label for="inputEmail4" class="form-label">Medicine Available</label>
+                <select class="form-select" aria-label="Default select example" ng-options="obj.m_name for obj in jsonMed" ng-model="med">
+                    <option selected value="">Open this select menu</option>
+                  </select>
+            </div>
+            <div class="col-md-3 offset-md-5 mt-2 mb-2">
+                <input type="button" value="Find Donor" ng-click="dofind_donor();" class="btn btn-outline-success">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4  mt-2" ng-repeat="obj in find_donor">
+                <div class="card" align="center" >
+                  <div class="text-center mt-3">
+                    <img src="uploads/{{obj.pic}}" style="height: 100px; width: 100px;" class="card-img-top" alt="...">
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">{{obj.name}}</h5>
+                      <a href="#" data-bs-toggle="modal" ng-click="doShow($index)" data-bs-target="#modalDetails" class="btn btn-primary">More Information</a>
+                    </div>
+                  </div>
+                </div>
+        </div>
+    </div>
+    <div class="modal" tabindex="-1" id="modalDetails">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: lightseagreen;">
+              <h5 class="modal-title" >{{selectedObj.email}}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Name: {{selectedObj.name}}</p>
+              
+              <p>City: {{selectedObj.city}}</p>
+              
+              <p>Medicine Name: {{selectedObj.m_name}}</p>
+
+              <p>Adddress: {{selectedObj.address}}</p>
+
+              <p>Proof: {{selectedObj.proof}}</p>
+              <p>Availability Time: {{selectedObj.timing}}</p>
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

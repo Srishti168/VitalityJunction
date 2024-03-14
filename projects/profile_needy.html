@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Needy Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+      function doPrev(refFile,prevImg)
+    {
+        const [file] = refFile.files
+        if (file) {
+          prevImg.src = URL.createObjectURL(file)
+        }
+    
+      }
+
+      $(document).ready(function()
+      {
+       
+
+      $("#fch-btn").click(doSearch);
+    //    $("#nEmail").blur(doSearch);
+      function doSearch()
+      {
+        
+        $("#server-nbtn").prop("disabled",true);
+        $("#update-nbtn").prop("disabled",true);
+         var needyEmail=$("#nEmail").val();
+       
+        // alert(needyEmail);
+
+        var obj={
+            type:"get",
+             url:"/chk-needy",
+             data:{
+                nemail:needyEmail
+             }
+        }
+        $.ajax(obj).done(
+            function(res){
+                if(res=="no"){
+                    $("#server-nbtn").prop("disabled",false);
+                }
+                else{
+              //  alert(JSON.stringify(res));
+               $("#update-nbtn").prop("disabled",false);
+               $("#nEmail").val(res[0].email);
+               $("#nName").val(res[0].names);
+               $("#nMobile").val(res[0].mobile);
+               $("#nDob").val(res[0].dob);
+               $("#nGen").val(res[0].gen);
+               $("#nCity").val(res[0].city);
+               $("#nAdd").val(res[0].address);
+               $("#prevImg").prop("src","uploads/"+res[0].picture);
+               $("#hdn").val(res[0].picture);
+                }
+            }
+        ).fail(
+            function(err)
+            {
+            alert(err);
+            }
+        )
+      }
+
+      
+      
+         
+      })
+
+      function pneedy()
+      {
+        var a=localStorage.getItem("active");
+        document.getElementById("nEmail").value=a;
+        document.getElementById("nEmail").setAttribute("readonly", true);
+        
+      }
+
+     </script>  
+  </head>
+
+  <body onload="pneedy()">
+   <!-- Navbar -->
+   
+   <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+    <div class="container-fluid" style="background-color:lightseagreen;">
+      <a class="navbar-brand"  style="font-family:Georgia, 'Times New Roman', Times, serif; font-size:30px;">Vitality Junction</a>
+      
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        
+        
+         
+    </div>
+</nav>
+  
+<div class="container">
+  <div class="row">
+
+<form class="row g-3" method="post" enctype="multipart/form-data">
+  
+  <div class="container">
+      <div class="row">
+  <div class="col-md-7 offset-md-2">
+    <label for="inputEmail4" class="form-label">Email Id</label>
+  
+  </div>
+  <div class="col-md-7 mb-3 offset-md-2">
+    <input type="email" class="form-control" id="nEmail" name="nEmail" >
+    </div>
+  <div class="col-md-1 mb-3" style="padding-left: 5px; padding-top: 1px;">
+    <button type="button" class="btn btn-primary" id="fch-btn">Fetch</button>
+  </div>
+  <div class="col-md-4 mb-3 offset-md-2">
+      <label  class="form-label">Name</label>
+      <input type="text" class="form-control" id="nName" name="nName" >
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="inputEmail4" class="form-label">Mobile No.</label>
+      <input type="number" class="form-control" name="nMobile" id="nMobile" >
+    </div>
+  
+  
+  <div class="col-md-3 mb-3 offset-md-2">
+    <label for="inputAddress" class="form-label">Date Of Birth</label>
+    <input type="date" class="form-control" id="nDob" name="nDob">
+    <!-- <label for="inputAddress" class="form-label">Address</label> -->
+    <!-- <input type="text" class="form-control" placeholder="1234 Main St" id="txtAdd" name="txtAdd"> -->
+  </div>
+  <div class="col-md-3 mb-3">
+    <label for="inputAddress" class="form-label">Gender</label>
+    <select class="form-select" name="nGen" id="nGen">
+        <option selected>Gender</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option >Others</option>
+        </select>
+    
+  </div>
+  
+  <div class="col-md-2 mb-3">
+    
+    
+    <label for="" class="form-label" >City</label>
+    <input type="text" class="form-control" name="nCity" id="nCity">
+
+  </div>
+  <div class="col-md-8  mb-3 offset-md-2">
+    <label for="inputAddress" class="form-label">Address</label>
+    <input type="text" class="form-control" placeholder="1234 Main St" id="nAdd" name="nAdd">
+  </div>
+
+    <div class="col-md-4  offset-md-2">
+      <div>
+      <label  class="form-label">Upload Aadhar Card Pic</label>
+      </div>
+      <input type="file" accept="image/*" id="imgSelect" name="ppic" onchange="doPrev(imgSelect,prevImg)">
+    </div>
+    <div class="col-md-4 m-1 ">
+      <label for="inputEmail4" class="form-label" >Image Selected</label>
+      <div>
+     <img src="" alt="" id="prevImg" style="height: 100px; width: 100px;">
+     </div>
+    </div>
+  
+  <div class="col-4 offset-md-4 mb-2 ">
+    <div class="d-grid gap-2 d-md-block">
+      <button class="btn btn-primary" type="submit" id="server-nbtn" formaction="/nServer" disabled>Server</button>
+      <button class="btn btn-primary" type="submit" id="update-nbtn" formaction="/nUpdate" disabled>Update</button>
+    </div>
+  </div>
+  <input type="hidden" id="hdn" name="hdn">
+</div>
+</div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+   </div>
+   
+
+
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

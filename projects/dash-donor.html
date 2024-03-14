@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Donor DashBoard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function()
+      {
+
+        
+           $("#btn-change").click(function()
+           {
+            var email=$("#txEmail").val();
+            var pwd=$("#oldPwd").val();
+            var npwd=$("#changeNew").val();
+            var cpwd=$("#changePwd").val();
+            var obj={
+              type:"get",
+              url:"/ch_pwd",
+              data:{
+                kemail:email,
+                old_pwd:pwd,
+                new_pwd:npwd,
+                ch_pwd:cpwd,
+              }
+            }
+            $.ajax(obj).done(function(resJSON)
+            {
+              // alert("hi");
+            //  alert(resJSON);
+             $("#out").html(resJSON).css("margin-top","10px").css("color","grey");
+            }).fail(function(err)
+            {
+              alert("hi");
+            })
+           })
+
+
+
+
+
+        
+      var oldflag=true;
+      $("#oldeye").click(function()
+      {
+        if(oldflag==true){
+        $("#oldeye").removeClass("fa-eye-slash").addClass("fa-eye");
+        $("#oldPwd").prop("type","text");
+        oldflag=false;
+        }
+        else{
+          $("#oldeye").removeClass("fa-eye").addClass("fa-eye-slash");
+        $("#oldPwd").prop("type","password");
+        oldflag=true;
+        }
+      })
+       
+
+      
+      var newflag=true;
+      $("#neweye").click(function()
+      {
+        if(newflag==true){
+        $("#neweye").removeClass("fa-eye-slash").addClass("fa-eye");
+        $("#changeNew").prop("type","text");
+        newflag=false;
+        }
+        else{
+          $("#neweye").removeClass("fa-eye").addClass("fa-eye-slash");
+        $("#changeNew").prop("type","password");
+        newflag=true;
+        }
+      })
+
+
+      
+      var chflag=true;
+      $("#cheye").click(function()
+      {
+        if(chflag==true){
+        $("#cheye").removeClass("fa-eye-slash").addClass("fa-eye");
+        $("#changePwd").prop("type","text");
+        chflag=false;
+        }
+        else{
+          $("#cheye").removeClass("fa-eye").addClass("fa-eye-slash");
+        $("#changePwd").prop("type","password");
+         chflag=true;
+        }
+      })
+
+
+
+
+
+
+
+        function set()
+        {
+          var a=localStorage.getItem("active");
+         $("#wel").html(a);
+         $("#txEmail").val(a).prop("readonly",true);
+        }
+        set();
+      })
+       
+    
+       </script> 
+  </head>
+  <body >
+    
+    <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+      <div class="container-fluid" style="background-color:lightseagreen;">
+          <a class="navbar-brand"  style="font-family:Georgia, 'Times New Roman', Times, serif; font-size:30px;">Vitality Junction</a>
+          
+          <div class="mt-3">
+            <p class="text-end" id="wel" style="font-size: 20px;">*</p>
+            </div>
+           
+      </div>
+  </nav>
+
+
+  
+  
+
+
+   <div class="container mt-5">
+    <div class="row mt-10">
+      <div class="col-md-3">
+        <div class="card" >
+       
+            <center>
+              <div class="mt-5">
+              
+                <img src="pics/girl.png" style="height: 200px;">
+              </div>
+            </center>
+          <div class="card-body" align="center">
+            <h5 class="card-title mt-3">Profile Form</h5>
+             <a href="profle_donor.html" class="btn btn-outline-dark mt-5">Profile Form</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+        
+          <center>
+            <div class="mt-5">
+              
+              <img src="pics/4118098.png" alt="" style="height:200px">
+             
+            </div>
+          </center>
+          <div class="card-body" align="center">
+            <h5 class="card-title mt-3">Available Medicine</h5>
+             <a href="avail_medicine.html" class="btn btn-outline-dark mt-5">Available Medicine</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card" >
+          <div class="mt-5">
+          <img src="pics/OIP.jpeg" style="height: 200px;" class="card-img-top" alt="...">
+          </div>
+          
+          <div class="card-body" align="center">
+            <h5 class="card-title mt-3">Medicine Manager</h5>
+             <a href="med_manager.html" class="btn btn-outline-dark mt-5">Medicine Manager</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card" >
+          
+          
+          <center>
+            <div class="mt-5">
+              <img src="pics/settings.png" alt="" style="height: 200px;">
+            </div>
+          </center>
+          <div class="card-body" align="center">
+            <h5 class="card-title mt-3">Settings</h5>
+            <input type="button" value="Settings" data-bs-toggle="modal" data-bs-target="#pass-div" id="btn-pwd" class="btn btn-outline-dark mt-5">
+         
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+  
+ 
+
+
+  <div class="modal" tabindex="-1" id="pass-div">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:lightseagreen">
+          <h5 class="modal-title">Change Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+         
+
+          <div class="container">
+            <div class="row">
+
+        <div class="col-md-10 ">
+          <label for="inputEmail4" class="form-label">Email</label>
+          <input type="email" class="form-control" id="txEmail" name="txEmail" >
+        
+        </div>
+        <div class="col-md-10 mt-2">
+            <label for="inputEmail4" class="form-label">Old Password</label>
+            <i class="fa-solid fa-eye-slash" style="color: grey;" id="oldeye"></i>
+            <input type="password" class="form-control"id="oldPwd" name="oldPwd" >
+          
+          </div>
+          <div class="col-md-10 mt-2">
+            <label for="inputEmail4" class="form-label">New Password</label>
+            <i class="fa-solid fa-eye-slash" style="color: grey;" id="neweye"></i>
+            <input type="password" class="form-control"id="changeNew" name="changeNew" >
+          
+          </div>
+          <div class="col-md-10 mt-2">
+            <label for="inputEmail4" class="form-label">Confirm Password</label>
+            <i class="fa-solid fa-eye-slash" style="color: grey;" id="cheye"></i>
+            <input type="password" class="form-control"id="changePwd" name="tchangePwd" >
+          
+          </div>
+          <div class="col-md-9" id="out">
+        
+          </div>
+
+         
+          </div>
+          </div>
+
+        </div>
+        
+        
+        <div class="modal-footer ">
+         
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> 
+          <button type="button" class="btn btn-primary" id="btn-change">Save changes</button> 
+        
+        </div>
+      </div>
+    </div>
+  </div> 
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>
